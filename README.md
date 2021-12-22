@@ -49,7 +49,7 @@ REACT_APP_MORALIS_APPLICATION_ID = xxxxxxxxxxxx
 REACT_APP_MORALIS_SERVER_URL = https://xxxxxx.grandmoralis.com:2053/server
 ```
 
-🎁 In `/src/components/QuickStart.js` Add the NFT collection as an Option(s) to the Select Input (with calue corresponding to the collectionName used when running the rarity generator)
+🎁 In `/src/components/QuickStart.js` Add the NFT collection as an Option(s) to the Select Input (with value corresponding to the collectionName used when running the rarity generator)
 ```sh
 <Option value="YOUr COLLECTION NAME"> Collcetion Name </Option> 
 ```
