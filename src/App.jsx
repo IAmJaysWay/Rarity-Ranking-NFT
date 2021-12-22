@@ -1,23 +1,12 @@
 import { useEffect } from "react";
 import { useMoralis } from "react-moralis";
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
-import Account from "components/Account";
-import Chains from "components/Chains";
-import TokenPrice from "components/TokenPrice";
-import ERC20Balance from "components/ERC20Balance";
-import ERC20Transfers from "components/ERC20Transfers";
-import InchDex from "components/InchDex";
-import NFTBalance from "components/NFTBalance";
-import Wallet from "components/Wallet";
-import { Layout, Tabs } from "antd";
+import { Layout } from "antd";
 import "antd/dist/antd.css";
-import NativeBalance from "components/NativeBalance";
 import "./style.css";
-import QuickStart from "components/QuickStart";
-import Contract from "components/Contract/Contract";
+import HomePage from "components/QuickStart";
 import Text from "antd/lib/typography/Text";
-import Ramper from "components/Ramper";
-import MenuItems from "./components/MenuItems";
+import rare from "./rare2.png"
 const { Header, Footer } = Layout;
 
 const styles = {
@@ -26,7 +15,7 @@ const styles = {
     justifyContent: "center",
     fontFamily: "Roboto, sans-serif",
     color: "#041836",
-    marginTop: "130px",
+    marginTop: "80px",
     padding: "10px",
   },
   header: {
@@ -62,65 +51,27 @@ const App = ({ isServerInfo }) => {
     <Layout style={{ height: "100vh", overflow: "auto" }}>
       <Router>
         <Header style={styles.header}>
+          <div style={{width:"250px"}}>
           <Logo />
-          <MenuItems />
-          <div style={styles.headerRight}>
-            <Chains />
-            <TokenPrice
-              address="0x1f9840a85d5af5bf1d1762f925bdaddc4201f984"
-              chain="eth"
-              image="https://cloudflare-ipfs.com/ipfs/QmXttGpZrECX5qCyXbBQiqgQNytVGeZW5Anewvh2jc4psg/"
-              size="40px"
-            />
-            <NativeBalance />
-            <Account />
+          </div>
+          <img src={rare} alt="" style={{height:"50px"}}/>
+          <div style={{display:"flex"}}>
+            <span style={{marginRight:"20px"}}>Get Listed</span>
+            <span style={{marginRight:"20px"}}>Learn More</span>
+            <span style={{marginRight:"20px"}}>FAQ</span>
           </div>
         </Header>
 
         <div style={styles.content}>
           <Switch>
-            <Route exact path="/quickstart">
-              <QuickStart isServerInfo={isServerInfo} />
-            </Route>
-            <Route path="/wallet">
-              <Wallet />
-            </Route>
-            <Route path="/1inch">
-              <Tabs defaultActiveKey="1" style={{ alignItems: "center" }}>
-                <Tabs.TabPane tab={<span>Ethereum</span>} key="1">
-                  <InchDex chain="eth" />
-                </Tabs.TabPane>
-                <Tabs.TabPane tab={<span>Binance Smart Chain</span>} key="2">
-                  <InchDex chain="bsc" />
-                </Tabs.TabPane>
-                <Tabs.TabPane tab={<span>Polygon</span>} key="3">
-                  <InchDex chain="polygon" />
-                </Tabs.TabPane>
-              </Tabs>
-            </Route>
-            <Route path="/erc20balance">
-              <ERC20Balance />
-            </Route>
-            <Route path="/onramp">
-              <Ramper />
-            </Route>
-            <Route path="/erc20transfers">
-              <ERC20Transfers />
-            </Route>
-            <Route path="/nftBalance">
-              <NFTBalance />
-            </Route>
-            <Route path="/contract">
-              <Contract />
+            <Route exact path="/homepage">
+              <HomePage isServerInfo={isServerInfo} />
             </Route>
             <Route path="/">
-              <Redirect to="/quickstart" />
+              <Redirect to="/homepage" />
             </Route>
             <Route path="/ethereum-boilerplate">
-              <Redirect to="/quickstart" />
-            </Route>
-            <Route path="/nonauthenticated">
-              <>Please login using the "Authenticate" button</>
+              <Redirect to="/homepage" />
             </Route>
           </Switch>
         </div>
