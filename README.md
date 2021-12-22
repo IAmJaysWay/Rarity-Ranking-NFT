@@ -2,7 +2,7 @@
 
 This Project is a fork of Ethereum Boilerplate and demonstrates how you can build your own NFT Rarity Ranker.
 
-![Preview](preview.gif)
+![Preview](theapp.gif)
 
 # ⭐️ `Star us`
 If this boilerplate helps you build Ethereum dapps faster - please star this project, every star makes us very happy!
