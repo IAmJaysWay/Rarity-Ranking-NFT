@@ -1,8 +1,8 @@
 const Moralis = require("moralis/node");
 const { timer } = require("rxjs");
 
-const serverUrl = ""; //Moralis Server Url here
-const appId = ""; //Moralis Server App ID here
+const serverUrl = "https://wurgiuz7dwbk.usemoralis.com:2053/server"; //Moralis Server Url here
+const appId = "IqqOHWe5SsvBQkg3FC7Vn3KXZXLiQ8NI5xUULXvG"; //Moralis Server App ID here
 Moralis.start({ serverUrl, appId });
 
 const resolveLink = (url) => {
@@ -10,13 +10,17 @@ const resolveLink = (url) => {
   return url.replace("ipfs://", "https://gateway.ipfs.io/ipfs/");
 };
 
-const collectionAddress = ""; //Collection Address Here
-const collectionName = ""; //CollectioonName Here
+const collectionAddress = "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d"; //Collection Address Here
+const collectionName = "AvalancheDogsReborn"; //CollectioonName Here
 
 async function generateRarity() {
   const NFTs = await Moralis.Web3API.token.getAllTokenIds({
     address: collectionAddress,
-  });
+    chain: "avalanche, 0xa86a"
+  })
+  console.log(NFTs);
+  
+  ;
 
   const totalNum = NFTs.total;
   const pageSize = NFTs.page_size;
@@ -30,6 +34,7 @@ async function generateRarity() {
     const NFTs = await Moralis.Web3API.token.getAllTokenIds({
       address: collectionAddress,
       offset: i,
+      chain: "avalanche, 0xa86a"
     });
     allNFTs = allNFTs.concat(NFTs.result);
     await timer(6000);
@@ -145,6 +150,7 @@ async function generateRarity() {
 
     await newObject.save();
     console.log(i);
+    
   }
 }
 

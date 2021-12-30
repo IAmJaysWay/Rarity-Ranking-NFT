@@ -6,7 +6,8 @@ import "antd/dist/antd.css";
 import "./style.css";
 import HomePage from "components/QuickStart";
 import Text from "antd/lib/typography/Text";
-import rare from "./rare2.png"
+import rare from "./rare2.png";
+import snowranklogo from "./snowranklogo.png";
 const { Header, Footer } = Layout;
 
 const styles = {
@@ -52,7 +53,8 @@ const App = ({ isServerInfo }) => {
       <Router>
         <Header style={styles.header}>
           <div style={{width:"250px"}}>
-          <Logo />
+          {/* <Logo /> */}
+          <img className="redlogo" src={snowranklogo} alt="Logo" />
           </div>
           <img src={rare} alt="" style={{height:"50px"}}/>
           <div style={{display:"flex"}}>
