@@ -107,9 +107,9 @@ async function generateRarity() {
       });
     }
 
-    if (allNFTs[j]?.metadata) {
+    if (allNFTs[j].metadata) {
       allNFTs[j].metadata = JSON.parse(allNFTs[j].metadata);
-      allNFTs[j].image = resolveLink(allNFTs[j].metadata?.image);
+      allNFTs[j].image = resolveLink(allNFTs[j].metadata.image);
     } else if (allNFTs[j].token_uri) {
       try {
         await fetch(allNFTs[j].token_uri)
@@ -146,6 +146,10 @@ async function generateRarity() {
     await newObject.save();
     console.log(i);
   }
+  
+  return true
 }
 
-generateRarity();
+generateRarity()
+.then( ( result ) => { console.log( result ) } )
+.catch( ( error ) => { console.log( error ) } )
