@@ -14,9 +14,9 @@ const collectionAddress = "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d"; //Collec
 const collectionName = "AvalancheDogsReborn"; //CollectioonName Here
 
 async function generateRarity() {
+  const options = {address: collectionAddress, chain: "avalanche testnet, 0xa869"}
   const NFTs = await Moralis.Web3API.token.getAllTokenIds({
-    address: collectionAddress,
-    chain: "avalanche, 0xa86a"
+    options
   })
   console.log(NFTs);
   
@@ -31,10 +31,9 @@ async function generateRarity() {
   const timer = (ms) => new Promise((res) => setTimeout(res, ms));
 
   for (let i = pageSize; i < totalNum; i = i + pageSize) {
+    const options = {address: collectionAddress, chain: "avalanche testnet, 0xa869"}
     const NFTs = await Moralis.Web3API.token.getAllTokenIds({
-      address: collectionAddress,
-      offset: i,
-      chain: "avalanche, 0xa86a"
+      options
     });
     allNFTs = allNFTs.concat(NFTs.result);
     await timer(6000);
