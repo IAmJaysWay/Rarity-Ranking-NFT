@@ -50,6 +50,7 @@ function HomePage() {
     const topNFTs = query.limit(18);
     const results = await topNFTs.find();
     setNFTBalances(results);
+   
   };
 
   const handleSelectToken = async (num, col) => {
