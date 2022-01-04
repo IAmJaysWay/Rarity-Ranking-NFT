@@ -57,7 +57,7 @@ const App = ({ isServerInfo }) => {
           {/* <Logo /> */}<Link to="/HomePage" className="btn btn-primary">
           <img className="redlogo" src={snowranklogo} alt="Logo" /></Link>
           </div>
-          <Link to="/HomePage" className="btn btn-primary"> <img src={rare} alt="" style={{height:"50px"}}/></Link>
+          <Link to="/HomePage" className="btn primary"> <img src={rare} alt="" style={{height:"50px"}}/></Link>
           <div style={{display:"flex"}}>
             <span style={{marginRight:"20px"}}>Get Listed</span>
             <span style={{marginRight:"20px"}}>Learn More</span>

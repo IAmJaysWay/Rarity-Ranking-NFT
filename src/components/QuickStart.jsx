@@ -104,6 +104,7 @@ function HomePage() {
           >
             {/* Your Option Here ---MAKE SURE VALUE CORRESPONDS TO MORALIS DB CLASS NAME */}
             <Option value="AvalancheDogsReborn">Avalanche Dogs</Option> 
+            <Option value="meowkitties">Meow Kitties</Option> 
           </Select>
           <Search
             style={{ width: "250px" }}
