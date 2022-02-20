@@ -2,11 +2,13 @@ import { useEffect } from "react";
 import { useMoralis } from "react-moralis";
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import { Layout } from "antd";
+import { Link } from 'react-router-dom'
 import "antd/dist/antd.css";
 import "./style.css";
 import HomePage from "components/QuickStart";
-import Text from "antd/lib/typography/Text";
-import rare from "./rare2.png"
+
+import rare from "./rare2.png";
+import snowranklogo from "./snowranklogo.png";
 const { Header, Footer } = Layout;
 
 const styles = {
@@ -51,10 +53,11 @@ const App = ({ isServerInfo }) => {
     <Layout style={{ height: "100vh", overflow: "auto" }}>
       <Router>
         <Header style={styles.header}>
-          <div style={{width:"250px"}}>
-          <Logo />
+          <div style={{width:"250px"}}> 
+          {/* <Logo /> */}<Link to="/HomePage" className="btn btn-primary">
+          <img className="redlogo" src={snowranklogo} alt="Logo" /></Link>
           </div>
-          <img src={rare} alt="" style={{height:"50px"}}/>
+          <Link to="/HomePage" className="btn primary"> <img src={rare} alt="" style={{height:"50px"}}/></Link>
           <div style={{display:"flex"}}>
             <span style={{marginRight:"20px"}}>Get Listed</span>
             <span style={{marginRight:"20px"}}>Learn More</span>
@@ -77,39 +80,7 @@ const App = ({ isServerInfo }) => {
         </div>
       </Router>
       <Footer style={{ textAlign: "center" }}>
-        <Text style={{ display: "block" }}>
-          ⭐️ Please star this{" "}
-          <a
-            href="https://github.com/ethereum-boilerplate/ethereum-boilerplate/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            boilerplate
-          </a>
-          , every star makes us very happy!
-        </Text>
 
-        <Text style={{ display: "block" }}>
-          🙋 You have questions? Ask them on the {""}
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://forum.moralis.io/t/ethereum-boilerplate-questions/3951/29"
-          >
-            Moralis forum
-          </a>
-        </Text>
-
-        <Text style={{ display: "block" }}>
-          📖 Read more about{" "}
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://moralis.io?utm_source=boilerplatehosted&utm_medium=todo&utm_campaign=ethereum-boilerplat"
-          >
-            Moralis
-          </a>
-        </Text>
       </Footer>
     </Layout>
   );

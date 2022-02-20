@@ -50,6 +50,7 @@ function HomePage() {
     const topNFTs = query.limit(18);
     const results = await topNFTs.find();
     setNFTBalances(results);
+   
   };
 
   const handleSelectToken = async (num, col) => {
@@ -102,6 +103,8 @@ function HomePage() {
             onChange={(e) => collectionChanged(e)}
           >
             {/* Your Option Here ---MAKE SURE VALUE CORRESPONDS TO MORALIS DB CLASS NAME */}
+            <Option value="AvalancheDogsReborn">Avalanche Dogs</Option> 
+            <Option value="meowkitties">Meow Kitties</Option> 
           </Select>
           <Search
             style={{ width: "250px" }}
