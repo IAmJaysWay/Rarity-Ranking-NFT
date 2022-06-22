@@ -13,36 +13,24 @@ const resolveLink = (url) => {
 const collectionAddress = ""; //Collection Address Here
 const collectionName = ""; //CollectioonName Here
 
-async function generateRarity() {
-  const NFTs = await Moralis.Web3API.token.getAllTokenIds({
-    address: collectionAddress,
-  });
+async function generateRarity(allNFTs) {
+  console.log('Starting generateRarity');
 
-  const totalNum = NFTs.total;
-  const pageSize = NFTs.page_size;
-  console.log(totalNum);
-  console.log(pageSize);
-  let allNFTs = NFTs.result;
+  const metadata = Object.keys(allNFTs).map((key, index) => {
 
-  const timer = (ms) => new Promise((res) => setTimeout(res, ms));
+    const data = JSON.parse(allNFTs[key].metadata)
+    data.token_id = key
+    return data
 
-  for (let i = pageSize; i < totalNum; i = i + pageSize) {
-    const NFTs = await Moralis.Web3API.token.getAllTokenIds({
-      address: collectionAddress,
-      offset: i,
-    });
-    allNFTs = allNFTs.concat(NFTs.result);
-    await timer(6000);
-  }
+  })
 
-  let metadata = allNFTs.map((e) => JSON.parse(e.metadata).attributes);
-
+  let totalNum = metadata.length;
   let tally = { TraitCount: {} };
 
-  for (let j = 0; j < metadata.length; j++) {
-    let nftTraits = metadata[j].map((e) => e.trait_type);
-    let nftValues = metadata[j].map((e) => e.value);
+  for (var j in metadata) {
 
+    let nftTraits = metadata[j].attributes.map((e) => e.trait_type);
+    let nftValues = metadata[j].attributes.map((e) => e.value);
     let numOfTraits = nftTraits.length;
 
     if (tally.TraitCount[numOfTraits]) {
@@ -71,7 +59,7 @@ async function generateRarity() {
   const collectionAttributes = Object.keys(tally);
   let nftArr = [];
   for (let j = 0; j < metadata.length; j++) {
-    let current = metadata[j];
+    let current = metadata[j].attributes;
     let totalRarity = 0;
     for (let i = 0; i < current.length; i++) {
       let rarityScore =
@@ -107,26 +95,11 @@ async function generateRarity() {
       });
     }
 
-    if (allNFTs[j].metadata) {
-      allNFTs[j].metadata = JSON.parse(allNFTs[j].metadata);
-      allNFTs[j].image = resolveLink(allNFTs[j].metadata.image);
-    } else if (allNFTs[j].token_uri) {
-      try {
-        await fetch(allNFTs[j].token_uri)
-          .then((response) => response.json())
-          .then((data) => {
-            allNFTs[j].image = resolveLink(data.image);
-          });
-      } catch (error) {
-        console.log(error);
-      }
-    }
-
     nftArr.push({
       Attributes: current,
       Rarity: totalRarity,
-      token_id: allNFTs[j].token_id,
-      image: allNFTs[j].image,
+      token_id: metadata[j].token_id,
+      image: resolveLink(metadata[j].image),
     });
   }
 
@@ -146,10 +119,55 @@ async function generateRarity() {
     await newObject.save();
     console.log(i);
   }
-  
-  return true
 }
 
-generateRarity()
-.then( ( result ) => { console.log( result ) } )
-.catch( ( error ) => { console.log( error ) } )
+async function fetchRarity() {
+
+  let cursor = null
+  let allNFTs = {}
+
+  do {
+
+    const response = await Moralis.Web3API.token.getAllTokenIds({
+      address: collectionAddress,
+      chain: "eth",
+      cursor: cursor
+    });
+
+    console.log(
+      `Got page ${response.page} of ${Math.ceil(
+        response.total / response.page_size
+      )}, ${response.total} total`
+    );
+
+    for (const item of response.result) {
+
+      if (item !== null && item.metadata !== null && item.metadata !== null) {
+
+        allNFTs[item.token_id] = {
+          metadata: item.metadata,
+          token_id: item.token_id,
+        };
+      }
+    }
+
+    console.log('Fetched NFTs: ', Object.keys(allNFTs).length)
+
+    cursor = response.cursor;
+
+  } while (cursor != "" && cursor != null);
+
+  generateRarity(allNFTs)
+    .then((result) => {
+      console.log('Finish generateRarity')
+
+    })
+    .catch((error) => { console.log(error) })
+
+}
+
+fetchRarity()
+  .then((result) => {
+    console.log('Finish fetchRarity')
+  })
+  .catch((error) => { console.log(error) })
